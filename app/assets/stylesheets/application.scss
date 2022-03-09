@@ -8,10 +8,14 @@
 
 // Global
 body {
-  padding-top: 70px;
+	padding-top: 70px;
 }
 
 // Bootstrap adjustments
 form.button_to {
-  display: inline;
+	display: inline;
+}
+
+th {
+	white-space: nowrap;
 }
