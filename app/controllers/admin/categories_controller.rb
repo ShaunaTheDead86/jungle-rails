@@ -1,4 +1,7 @@
 class Admin::CategoriesController < ApplicationController
+
+  before_filter :authorize
+  
   def index
     @categories = Category.all
   end
@@ -11,12 +14,14 @@ class Admin::CategoriesController < ApplicationController
     @category = Category.new(category_params)
 
     if @category.save
-      redirect_to [:admin, :categories], notice: 'Category created!'
+      redirect_to [:categories, :admin]
     else
-      render :new
+      redirect_to [:new, :session]
     end
   end
 
+  private 
+  
   def category_params
     params.require(:category).permit(
       :id,

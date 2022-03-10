@@ -1,6 +1,7 @@
 class Admin::ProductsController < ApplicationController
 
-  http_basic_authenticate_with :name => ENV['ADMIN_USERNAME'], :password => ENV['ADMIN_PASSWORD'] 
+  before_filter :authorize
+  # http_basic_authenticate_with :name => ENV['ADMIN_USERNAME'], :password => ENV['ADMIN_PASSWORD'] 
 
   def index
     @products = Product.order(id: :desc).all
@@ -14,16 +15,16 @@ class Admin::ProductsController < ApplicationController
     @product = Product.new(product_params)
 
     if @product.save
-      redirect_to [:admin, :products], notice: 'Product created!'
+      redirect_to [:products, :admin]
     else
-      render :new
+      redirect_to [:new, :session]
     end
   end
 
   def destroy
     @product = Product.find params[:id]
     @product.destroy
-    redirect_to [:admin, :products], notice: 'Product deleted!'
+    redirect_to [:products, :admin]
   end
 
   private
