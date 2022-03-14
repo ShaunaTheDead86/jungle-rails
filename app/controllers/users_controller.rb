@@ -4,7 +4,11 @@ class UsersController < ApplicationController
   end
 
   def create
-    user = User.new(user_params)
+    @params = @user_params
+    @params.email = @params.email.downcase
+    @params.email = @params.email.strip!
+
+    user = User.new(@params)
     if user.save
       session[:user_id] = user.id
       redirect_to :root
