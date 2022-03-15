@@ -4,11 +4,10 @@ class UsersController < ApplicationController
   end
 
   def create
-    @params = @user_params
-    @params.email = @params.email.downcase
-    @params.email = @params.email.strip!
+    user = User.new(user_params)
 
-    user = User.new(@params)
+    # user.email.strip!.downcase!
+
     if user.save
       session[:user_id] = user.id
       redirect_to :root
@@ -16,7 +15,6 @@ class UsersController < ApplicationController
       redirect_to [:new, :user]
     end
   end
-
 
   private 
   
